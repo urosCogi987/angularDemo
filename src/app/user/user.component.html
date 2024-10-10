@@ -1,0 +1,52 @@
+<div style="display: flex">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Surname</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" (click)="selectUser(user)">
+        <td>{{ user.name }}</td>
+        <td>{{ user.surname }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="selectedUser || isAdding" style="margin-left: 20px">
+    <h3>{{ isAdding ? "Add user" : "Update user" }}</h3>
+    <form (ngSubmit)="isAdding ? addUser() : updateUser()">
+      <div>
+        <label>Name:</label>
+        <input
+          [ngModel]="isAdding ? newUser.name : selectedUser?.name"
+          (ngModelChange)="
+            isAdding ? (newUser.name = $event) : (selectedUser!.name = $event)
+          "
+          name="name"
+          required
+        />
+      </div>
+      <div>
+        <label>Surname:</label>
+        <input
+          [ngModel]="isAdding ? newUser.surname : selectedUser?.surname"
+          (ngModelChange)="
+            isAdding
+              ? (newUser.surname = $event)
+              : (selectedUser!.surname = $event)
+          "
+          name="surname"
+          required
+        />
+      </div>
+      <button type="submit">{{ isAdding ? "Add User" : "Update User" }}</button>
+      <button type="button" (click)="selectedUser = null; isAdding = false">
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
+
+<button (click)="startAdding()">Add New User</button>
