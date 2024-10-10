@@ -1,12 +1,10 @@
-<div>
-  <input type="text" [(ngModel)]="mirroredValue" placeholder="Type sth" />
-</div>
-<br />
-<p>Typed: {{ mirroredValue }}</p>
+<nav>
+  <ul>
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/parent">Parent</a></li>
+    <li><a routerLink="/details">Details</a></li>
+    <!-- Add more links as needed -->
+  </ul>
+</nav>
 
-<br />
-<br />
-<br />
-
-<app-child (valueChanged)="updateValue($event)"></app-child>
-<p>Typed: {{ childValue }}</p>
+<router-outlet></router-outlet>

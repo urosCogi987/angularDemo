@@ -1,0 +1,13 @@
+<div class="inline-container">
+  <div>
+    <input
+      type="checkbox"
+      [(ngModel)]="isChecked"
+      (click)="toggleTextVisibility()"
+    />
+    <!-- na (change) zajebava i 2 puta mora se klikne-->
+  </div>
+  <div *ngIf="isChecked">
+    <p>Uros</p>
+  </div>
+</div>

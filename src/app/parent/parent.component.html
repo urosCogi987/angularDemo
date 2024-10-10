@@ -1,0 +1,13 @@
+<br />
+<div>
+  <input type="text" [(ngModel)]="mirroredValue" placeholder="Type sth" />
+</div>
+<br />
+<p>Typed: {{ mirroredValue }}</p>
+
+<br />
+<br />
+<br />
+
+<app-child (valueChanged)="updateValue($event)"></app-child>
+<p>Typed: {{ childValue }}</p>
