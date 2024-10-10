@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-
+import { ApplicationRoutes } from './const/application-routes';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -8,4 +8,6 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+  appRoutes = ApplicationRoutes;
+}
