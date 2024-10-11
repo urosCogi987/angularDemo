@@ -44,8 +44,13 @@ export class UserComponent {
     this.updateUser(index);
   }
 
-  startAdding(): void {
+  initializeUser(): void {
     this.selectedUser = { id: -1, name: '', surname: '' };
+  }
+
+  deleteUser(userId: number): void {
+    this.userService.deleteUser(userId);
+    this.selectedUser = null;
   }
 
   private updateUser(index: number): void {
@@ -55,7 +60,8 @@ export class UserComponent {
 
   private addUser(): void {
     this.selectedUser!.id = this.users.length;
-    this.users.push({ ...this.selectedUser! });
+    // logika za id u userService
+    this.userService.addUser(this.selectedUser!);
     this.selectedUser = null;
   }
 

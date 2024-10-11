@@ -10,6 +10,11 @@
       <tr *ngFor="let user of users" (click)="selectUser(user)">
         <td>{{ user.name | capitalize : capitalizeNames }}</td>
         <td>{{ user.surname | capitalize : capitalizeNames }}</td>
+        <td>
+          <button (click)="deleteUser(user.id); $event.stopPropagation()">
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -40,4 +45,4 @@
   </label>
 </div>
 
-<button (click)="startAdding()">Add New User</button>
+<button (click)="initializeUser()">Add New User</button>

@@ -1,46 +1,62 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { IUser } from '../models/user';
+import { DOCUMENT } from '@angular/common';
+import { LocalStorageConsts } from '../const/local-storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  users: IUser[] = [
-    {
-      id: 0,
-      name: 'Name1',
-      surname: 'Surname1',
-    },
-    {
-      id: 1,
-      name: 'Name2',
-      surname: 'Surname2',
-    },
-    {
-      id: 2,
-      name: 'Name3',
-      surname: 'Surname3',
-    },
-    {
-      id: 3,
-      name: 'Name4',
-      surname: 'Surname4',
-    },
-    {
-      id: 4,
-      name: 'Name5',
-      surname: 'Surname5',
-    },
-    {
-      id: 5,
-      name: 'Name6',
-      surname: 'Surname6',
-    },
-  ];
+  private _users: IUser[] = [];
 
-  constructor() {}
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    const localStorage = this.document.defaultView?.localStorage;
+    const usersJson = localStorage?.getItem(LocalStorageConsts.Users);
+
+    if (usersJson) {
+      this._users = JSON.parse(usersJson);
+    }
+  }
+
+  addUser(user: IUser): void {
+    const localStorage = this.document.defaultView?.localStorage;
+
+    this._users.push(user);
+    localStorage?.setItem(
+      LocalStorageConsts.Users,
+      JSON.stringify(this._users)
+    );
+  }
+
+  updateUser(user: IUser): void {
+    const index = this._users.findIndex((u) => u.id === user.id);
+    if (index === -1) {
+      return;
+    }
+
+    this._users[index] = user;
+    const localStorage = this.document.defaultView?.localStorage;
+    localStorage?.setItem(
+      LocalStorageConsts.Users,
+      JSON.stringify(this._users)
+    );
+  }
+
+  deleteUser(userId: number): void {
+    const index = this._users.findIndex((u) => u.id === userId);
+    if (index === -1) {
+      return;
+    }
+
+    this._users.splice(index, 1);
+    const localStorage = this.document.defaultView?.localStorage;
+    localStorage?.setItem(
+      LocalStorageConsts.Users,
+      JSON.stringify(this._users)
+    );
+  }
 
   getAllUsers(): IUser[] {
-    return this.users;
+    return this._users;
   }
 }
