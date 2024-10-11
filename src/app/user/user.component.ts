@@ -16,37 +16,51 @@ export class UserComponent {
   users: IUser[] = [];
   selectedUser: IUser | null = null;
   isAdding: boolean = false;
-  newUser: IUser = { id: 0, name: '', surname: '' };
 
-  selectUser(user: IUser) {
+  selectUser(user: IUser): void {
     this.selectedUser = { ...user };
     this.isAdding = false;
   }
 
-  updateUser() {
-    if (this.selectedUser) {
-      const index = this.users.findIndex(
-        (user) => user.id === this.selectedUser?.id
-      );
-      if (index !== -1) {
-        this.users[index] = { ...this.selectedUser };
-        this.selectedUser = null;
-      }
+  updateUser(): void {
+    if (!this.isUserValid()) {
+      return;
+    }
+
+    const index = this.users.findIndex(
+      (user) => user.id == this.selectedUser?.id
+    );
+    if (index !== -1) {
+      this.users[index] = { ...this.selectedUser! };
+      this.selectedUser = null;
     }
   }
 
-  addUser() {
-    if (this.newUser.name && this.newUser.surname) {
-      this.newUser.id = this.users.length;
-      this.users.push({ ...this.newUser });
-      this.newUser = { id: 0, name: '', surname: '' };
-      this.isAdding = false;
+  addUser(): void {
+    if (!this.isUserValid()) {
+      return;
     }
-  }
 
-  startAdding() {
-    this.isAdding = true;
+    this.selectedUser!.id = this.users.length;
+    this.users.push({ ...this.selectedUser! });
     this.selectedUser = null;
+    this.isAdding = false;
+  }
+
+  isUserValid(): boolean {
+    if (!this.selectedUser?.name) {
+      return false;
+    }
+    if (!this.selectedUser?.surname) {
+      return false;
+    }
+
+    return true;
+  }
+
+  startAdding(): void {
+    this.isAdding = true;
+    this.selectedUser = { id: 0, name: '', surname: '' };
   }
 
   constructor() {
