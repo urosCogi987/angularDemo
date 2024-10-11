@@ -16,7 +16,7 @@
 
   <div *ngIf="selectedUser" style="margin-left: 20px">
     <h3>{{ isAdding ? "Add user" : "Update user" }}</h3>
-    <form (ngSubmit)="isAdding ? addUser() : updateUser()">
+    <form (ngSubmit)="handleUser()">
       <div>
         <label>Name:</label>
         <input [(ngModel)]="selectedUser!.name" name="name" required />

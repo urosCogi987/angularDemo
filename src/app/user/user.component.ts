@@ -22,11 +22,20 @@ export class UserComponent {
     this.isAdding = false;
   }
 
-  updateUser(): void {
+  handleUser(): void {
     if (!this.isUserValid()) {
       return;
     }
 
+    if (this.isAdding) {
+      this.addUser();
+      return;
+    }
+
+    this.updateUser();
+  }
+
+  private updateUser(): void {
     const index = this.users.findIndex(
       (user) => user.id == this.selectedUser?.id
     );
@@ -36,18 +45,14 @@ export class UserComponent {
     }
   }
 
-  addUser(): void {
-    if (!this.isUserValid()) {
-      return;
-    }
-
+  private addUser(): void {
     this.selectedUser!.id = this.users.length;
     this.users.push({ ...this.selectedUser! });
     this.selectedUser = null;
     this.isAdding = false;
   }
 
-  isUserValid(): boolean {
+  private isUserValid(): boolean {
     if (!this.selectedUser?.name) {
       return false;
     }
