@@ -60,7 +60,6 @@ export class UserComponent {
 
   private addUser(): void {
     this.selectedUser!.id = this.users.length;
-    // logika za id u userService
     this.userService.addUser(this.selectedUser!);
     this.selectedUser = null;
   }

@@ -10,7 +10,7 @@ export class UserService {
   private _users: IUser[] = [];
 
   constructor(@Inject(DOCUMENT) private document: Document) {
-    const localStorage = this.document.defaultView?.localStorage;
+    const localStorage = this.getLocalStorage();
     const usersJson = localStorage?.getItem(LocalStorageConsts.Users);
 
     if (usersJson) {
@@ -19,7 +19,9 @@ export class UserService {
   }
 
   addUser(user: IUser): void {
-    const localStorage = this.document.defaultView?.localStorage;
+    const localStorage = this.getLocalStorage();
+
+    user.id = this.getNextId();
 
     this._users.push(user);
     localStorage?.setItem(
@@ -29,13 +31,13 @@ export class UserService {
   }
 
   updateUser(user: IUser): void {
-    const index = this._users.findIndex((u) => u.id === user.id);
+    const index = this.findUserIndex(user.id);
     if (index === -1) {
       return;
     }
 
     this._users[index] = user;
-    const localStorage = this.document.defaultView?.localStorage;
+    const localStorage = this.getLocalStorage();
     localStorage?.setItem(
       LocalStorageConsts.Users,
       JSON.stringify(this._users)
@@ -43,13 +45,13 @@ export class UserService {
   }
 
   deleteUser(userId: number): void {
-    const index = this._users.findIndex((u) => u.id === userId);
+    const index = this.findUserIndex(userId);
     if (index === -1) {
       return;
     }
 
     this._users.splice(index, 1);
-    const localStorage = this.document.defaultView?.localStorage;
+    const localStorage = this.getLocalStorage();
     localStorage?.setItem(
       LocalStorageConsts.Users,
       JSON.stringify(this._users)
@@ -58,5 +60,19 @@ export class UserService {
 
   getAllUsers(): IUser[] {
     return this._users;
+  }
+
+  private getLocalStorage(): Storage | null {
+    return this.document.defaultView?.localStorage || null;
+  }
+
+  private getNextId(): number {
+    return this._users.length > 0
+      ? Math.max(...this._users.map((u) => u.id)) + 1
+      : 0;
+  }
+
+  private findUserIndex(userId: number): number {
+    return this._users.findIndex((u) => u.id === userId);
   }
 }
