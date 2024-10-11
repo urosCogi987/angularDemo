@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { IUser } from '../models/user';
 import { FormsModule } from '@angular/forms';
+import { CapitalizePipe } from '../pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CapitalizePipe],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
@@ -15,11 +16,18 @@ export class UserComponent {
   userService: UserService = inject(UserService);
   users: IUser[] = [];
   selectedUser: IUser | null = null;
-  isAdding: boolean = false;
+  capitalizeNames: boolean = false;
+
+  constructor() {
+    this.users = this.userService.getAllUsers();
+  }
 
   selectUser(user: IUser): void {
     this.selectedUser = { ...user };
-    this.isAdding = false;
+  }
+
+  deselectUser(): void {
+    this.selectedUser = null;
   }
 
   handleUser(): void {
@@ -27,29 +35,28 @@ export class UserComponent {
       return;
     }
 
-    if (this.isAdding) {
+    const index = this.findUserIndex();
+    if (index === -1) {
       this.addUser();
       return;
     }
 
-    this.updateUser();
+    this.updateUser(index);
   }
 
-  private updateUser(): void {
-    const index = this.users.findIndex(
-      (user) => user.id == this.selectedUser?.id
-    );
-    if (index !== -1) {
-      this.users[index] = { ...this.selectedUser! };
-      this.selectedUser = null;
-    }
+  startAdding(): void {
+    this.selectedUser = { id: -1, name: '', surname: '' };
+  }
+
+  private updateUser(index: number): void {
+    this.users[index] = { ...this.selectedUser! };
+    this.selectedUser = null;
   }
 
   private addUser(): void {
     this.selectedUser!.id = this.users.length;
     this.users.push({ ...this.selectedUser! });
     this.selectedUser = null;
-    this.isAdding = false;
   }
 
   private isUserValid(): boolean {
@@ -63,12 +70,7 @@ export class UserComponent {
     return true;
   }
 
-  startAdding(): void {
-    this.isAdding = true;
-    this.selectedUser = { id: 0, name: '', surname: '' };
-  }
-
-  constructor() {
-    this.users = this.userService.getAllUsers();
+  private findUserIndex(): number {
+    return this.users.findIndex((user) => user.id == this.selectedUser?.id);
   }
 }

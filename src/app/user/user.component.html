@@ -8,14 +8,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of users" (click)="selectUser(user)">
-        <td>{{ user.name }}</td>
-        <td>{{ user.surname }}</td>
+        <td>{{ user.name | capitalize : capitalizeNames }}</td>
+        <td>{{ user.surname | capitalize : capitalizeNames }}</td>
       </tr>
     </tbody>
   </table>
 
   <div *ngIf="selectedUser" style="margin-left: 20px">
-    <h3>{{ isAdding ? "Add user" : "Update user" }}</h3>
+    <h3>{{ selectedUser.id === -1 ? "Add user" : "Update user" }}</h3>
     <form (ngSubmit)="handleUser()">
       <div>
         <label>Name:</label>
@@ -25,12 +25,19 @@
         <label>Surname:</label>
         <input [(ngModel)]="selectedUser!.surname" name="surname" required />
       </div>
-      <button type="submit">{{ isAdding ? "Add User" : "Update User" }}</button>
-      <button type="button" (click)="selectedUser = null; isAdding = false">
-        Cancel
+      <button type="submit">
+        {{ selectedUser.id === -1 ? "Add User" : "Update User" }}
       </button>
+      <button type="button" (click)="deselectUser()">Cancel</button>
     </form>
   </div>
+</div>
+
+<div>
+  <label>
+    <input type="checkbox" [(ngModel)]="capitalizeNames" />
+    Capitalize Names and Surnames
+  </label>
 </div>
 
 <button (click)="startAdding()">Add New User</button>
