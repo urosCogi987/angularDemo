@@ -11,31 +11,17 @@
         <td>{{ user.name | capitalize : capitalizeNames }}</td>
         <td>{{ user.surname | capitalize : capitalizeNames }}</td>
         <td>
-          <button (click)="deleteUser(user.id); $event.stopPropagation()">
-            Delete
-          </button>
+          <button (click)="deleteUser(user.id, $event)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <div *ngIf="selectedUser" style="margin-left: 20px">
-    <h3>{{ selectedUser.id === -1 ? "Add user" : "Update user" }}</h3>
-    <form (ngSubmit)="handleUser()">
-      <div>
-        <label>Name:</label>
-        <input [(ngModel)]="selectedUser!.name" name="name" required />
-      </div>
-      <div>
-        <label>Surname:</label>
-        <input [(ngModel)]="selectedUser!.surname" name="surname" required />
-      </div>
-      <button type="submit">
-        {{ selectedUser.id === -1 ? "Add User" : "Update User" }}
-      </button>
-      <button type="button" (click)="deselectUser()">Cancel</button>
-    </form>
-  </div>
+  <app-user-upsert
+    [user]="selectedUser"
+    (userSubmit)="handleUser($event)"
+    (cancelEdit)="deselectUser()"
+  ></app-user-upsert>
 </div>
 
 <div>
@@ -46,3 +32,4 @@
 </div>
 
 <button (click)="initializeUser()">Add New User</button>
+<!-- </div> -->

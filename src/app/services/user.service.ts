@@ -9,8 +9,7 @@ import { LocalStorageConsts } from '../const/local-storage';
 export class UserService {
   private _users: IUser[] = [];
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
-    const localStorage = this.getLocalStorage();
+  constructor() {
     const usersJson = localStorage?.getItem(LocalStorageConsts.Users);
 
     if (usersJson) {
@@ -19,8 +18,6 @@ export class UserService {
   }
 
   addUser(user: IUser): void {
-    const localStorage = this.getLocalStorage();
-
     user.id = this.getNextId();
 
     this._users.push(user);
@@ -32,12 +29,11 @@ export class UserService {
 
   updateUser(user: IUser): void {
     const index = this.findUserIndex(user.id);
-    if (index === -1) {
+    if (index <= 0) {
       return;
     }
 
     this._users[index] = user;
-    const localStorage = this.getLocalStorage();
     localStorage?.setItem(
       LocalStorageConsts.Users,
       JSON.stringify(this._users)
@@ -50,8 +46,10 @@ export class UserService {
       return;
     }
 
-    this._users.splice(index, 1);
-    const localStorage = this.getLocalStorage();
+    // this._users.splice(index, 1);
+    // this._users = this._users.filter((x) => x.id != userId);
+    const usersFiltered = this._users.filter((x) => x.id != userId);
+    this._users = usersFiltered;
     localStorage?.setItem(
       LocalStorageConsts.Users,
       JSON.stringify(this._users)
@@ -59,17 +57,14 @@ export class UserService {
   }
 
   getAllUsers(): IUser[] {
-    return this._users;
-  }
-
-  private getLocalStorage(): Storage | null {
-    return this.document.defaultView?.localStorage || null;
+    const usersCopy = this._users.map((user) => ({ ...user }));
+    return usersCopy;
   }
 
   private getNextId(): number {
     return this._users.length > 0
       ? Math.max(...this._users.map((u) => u.id)) + 1
-      : 0;
+      : 1;
   }
 
   private findUserIndex(userId: number): number {
