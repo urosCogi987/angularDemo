@@ -1,20 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { IUser } from '../models/user';
+import { UserService } from '../../services/user.service';
+import { IUser } from '../../models/user';
 import { FormsModule } from '@angular/forms';
-import { CapitalizePipe } from '../pipes/capitalize.pipe';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { UserUpsertComponent } from '../user-upsert/user-upsert.component';
+import { Router } from '@angular/router';
+import { ApplicationRoutes } from '../../const/application-routes';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, CapitalizePipe, UserUpsertComponent],
+  imports: [CommonModule, FormsModule, CapitalizePipe],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })
 export class UserComponent {
   userService: UserService = inject(UserService);
+  router: Router = inject(Router);
   users: IUser[] = [];
   selectedUser: IUser | null = null;
   capitalizeNames: boolean = false;
@@ -54,6 +57,10 @@ export class UserComponent {
     this.selectedUser = null;
     this.users = this.userService.getAllUsers();
     event.stopPropagation();
+  }
+
+  navigateToUserUpsert(userId: number | null): void {
+    this.router.navigate([`${ApplicationRoutes.UsersUpsert}/${userId}`]);
   }
 
   private updateUser(user: IUser, index: number): void {

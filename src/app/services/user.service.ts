@@ -20,10 +20,7 @@ export class UserService {
     user.id = this.getNextId();
 
     this._users.push(user);
-    localStorage?.setItem(
-      LocalStorageConsts.Users,
-      JSON.stringify(this._users)
-    );
+    this.updateLocalStorage();
   }
 
   updateUser(user: IUser): void {
@@ -33,22 +30,20 @@ export class UserService {
     }
 
     this._users[index] = user;
-    localStorage?.setItem(
-      LocalStorageConsts.Users,
-      JSON.stringify(this._users)
-    );
+    this.updateLocalStorage();
   }
 
   deleteUser(userId: number): void {
     this._users = this._users.filter((x) => x.id != userId);
-    localStorage?.setItem(
-      LocalStorageConsts.Users,
-      JSON.stringify(this._users)
-    );
+    this.updateLocalStorage();
   }
 
   getAllUsers(): IUser[] {
-    return this._users.map((user) => ({ ...user }));
+    return JSON.parse(JSON.stringify(this._users));
+  }
+
+  getUserById(userId: number): IUser | undefined {
+    return this._users.find((user) => user.id === userId);
   }
 
   private getNextId(): number {
@@ -59,5 +54,12 @@ export class UserService {
 
   private findUserIndex(userId: number): number {
     return this._users.findIndex((u) => u.id === userId);
+  }
+
+  private updateLocalStorage(): void {
+    localStorage?.setItem(
+      LocalStorageConsts.Users,
+      JSON.stringify(this._users)
+    );
   }
 }

@@ -1,6 +1,6 @@
 <div *ngIf="user">
   <h3>{{ user.id > 0 ? "Update User" : "Add User" }}</h3>
-  <form (ngSubmit)="handleUser()">
+  <form (ngSubmit)="handleUser(user, user.id > 0 ? false : true)">
     <div>
       <label>Name:</label>
       <input [(ngModel)]="user!.name" name="name" required />

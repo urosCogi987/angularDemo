@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users" (click)="selectUser(user)">
+      <tr *ngFor="let user of users" (click)="navigateToUserUpsert(user.id)">
         <td>{{ user.name | capitalize : capitalizeNames }}</td>
         <td>{{ user.surname | capitalize : capitalizeNames }}</td>
         <td>
@@ -16,12 +16,6 @@
       </tr>
     </tbody>
   </table>
-
-  <app-user-upsert
-    [user]="selectedUser"
-    (userSubmit)="handleUser($event)"
-    (cancelEdit)="deselectUser()"
-  ></app-user-upsert>
 </div>
 
 <div>
@@ -31,5 +25,4 @@
   </label>
 </div>
 
-<button (click)="initializeUser()">Add New User</button>
-<!-- </div> -->
+<button (click)="navigateToUserUpsert(null)">Add New User</button>
