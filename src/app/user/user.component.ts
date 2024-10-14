@@ -32,7 +32,7 @@ export class UserComponent {
   }
 
   handleUser(user: IUser): void {
-    if (!this.isUserValid()) {
+    if (!this.isUserValid(user)) {
       return;
     }
 
@@ -69,11 +69,11 @@ export class UserComponent {
     this.selectedUser = null;
   }
 
-  private isUserValid(): boolean {
-    if (!this.selectedUser?.name) {
+  private isUserValid(user: IUser): boolean {
+    if (!user.name) {
       return false;
     }
-    if (!this.selectedUser?.surname) {
+    if (!user.surname) {
       return false;
     }
 

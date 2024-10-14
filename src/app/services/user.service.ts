@@ -41,15 +41,7 @@ export class UserService {
   }
 
   deleteUser(userId: number): void {
-    const index = this.findUserIndex(userId);
-    if (index === -1) {
-      return;
-    }
-
-    // this._users.splice(index, 1);
-    // this._users = this._users.filter((x) => x.id != userId);
-    const usersFiltered = this._users.filter((x) => x.id != userId);
-    this._users = usersFiltered;
+    this._users = this._users.filter((x) => x.id != userId);
     localStorage?.setItem(
       LocalStorageConsts.Users,
       JSON.stringify(this._users)
@@ -57,8 +49,7 @@ export class UserService {
   }
 
   getAllUsers(): IUser[] {
-    const usersCopy = this._users.map((user) => ({ ...user }));
-    return usersCopy;
+    return this._users.map((user) => ({ ...user }));
   }
 
   private getNextId(): number {
