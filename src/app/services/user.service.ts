@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IUser } from '../models/user';
-import { DOCUMENT } from '@angular/common';
 import { LocalStorageConsts } from '../const/local-storage';
 
 @Injectable({
@@ -29,7 +28,7 @@ export class UserService {
 
   updateUser(user: IUser): void {
     const index = this.findUserIndex(user.id);
-    if (index <= 0) {
+    if (index < 0) {
       return;
     }
 

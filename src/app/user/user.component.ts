@@ -37,7 +37,7 @@ export class UserComponent {
     }
 
     const index = this.findUserIndex();
-    if (index <= 0) {
+    if (index < 0) {
       this.addUser(user);
       return;
     }
