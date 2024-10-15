@@ -23,16 +23,6 @@ export class UserUpsertComponent {
     this.initializeUser();
   }
 
-  private initializeUser(): void {
-    const userId = Number(this.route.snapshot.params['id']);
-    if (userId) {
-      this.user = this.userService.getUserById(userId);
-      return;
-    }
-
-    this.user = { id: -1, name: '', surname: '' };
-  }
-
   cancel(): void {
     this.router.navigate([`${ApplicationRoutes.Users}`]);
   }
@@ -51,6 +41,16 @@ export class UserUpsertComponent {
     this.router.navigate([`${ApplicationRoutes.Users}`]);
   }
 
+  private initializeUser(): void {
+    const userId = Number(this.route.snapshot.params['id']);
+    if (userId) {
+      this.user = this.userService.getUserById(userId);
+      return;
+    }
+
+    this.user = { id: -1, name: '', surname: '' };
+  }
+
   private isUserValid(user: IUser): boolean {
     if (!user.name) {
       return false;
@@ -61,15 +61,4 @@ export class UserUpsertComponent {
 
     return true;
   }
-
-  // private updateUser(user: IUser): void {
-  //   this.userService.updateUser(user);
-  //   this.router.navigate([`${ApplicationRoutes.Users}`]);
-  // }
-
-  // private addUser(user: IUser): void {
-  //   this.userService.addUser(user);
-  //   this.users = this.userService.getAllUsers();
-  //   this.selectedUser = null;
-  // }
 }

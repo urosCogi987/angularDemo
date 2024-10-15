@@ -4,7 +4,6 @@ import { UserService } from '../../services/user.service';
 import { IUser } from '../../models/user';
 import { FormsModule } from '@angular/forms';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
-import { UserUpsertComponent } from '../user-upsert/user-upsert.component';
 import { Router } from '@angular/router';
 import { ApplicationRoutes } from '../../const/application-routes';
 
@@ -19,42 +18,42 @@ export class UserComponent {
   userService: UserService = inject(UserService);
   router: Router = inject(Router);
   users: IUser[] = [];
-  selectedUser: IUser | null = null;
+  // selectedUser: IUser | null = null;
   capitalizeNames: boolean = false;
 
   constructor() {
     this.users = this.userService.getAllUsers();
   }
 
-  selectUser(user: IUser): void {
-    this.selectedUser = { ...user };
-  }
+  // selectUser(user: IUser): void {
+  //   this.selectedUser = { ...user };
+  // }
 
-  deselectUser(): void {
-    this.selectedUser = null;
-  }
+  // deselectUser(): void {
+  //   this.selectedUser = null;
+  // }
 
-  handleUser(user: IUser): void {
-    if (!this.isUserValid(user)) {
-      return;
-    }
+  // handleUser(user: IUser): void {
+  //   if (!this.isUserValid(user)) {
+  //     return;
+  //   }
 
-    const index = this.findUserIndex();
-    if (index < 0) {
-      this.addUser(user);
-      return;
-    }
+  //   const index = this.findUserIndex();
+  //   if (index < 0) {
+  //     this.addUser(user);
+  //     return;
+  //   }
 
-    this.updateUser(user, index);
-  }
+  //   this.updateUser(user, index);
+  // }
 
-  initializeUser(): void {
-    this.selectedUser = { id: -1, name: '', surname: '' };
-  }
+  // initializeUser(): void {
+  //   this.selectedUser = { id: -1, name: '', surname: '' };
+  // }
 
   deleteUser(userId: number, event: Event): void {
     this.userService.deleteUser(userId);
-    this.selectedUser = null;
+    // this.selectedUser = null;
     this.users = this.userService.getAllUsers();
     event.stopPropagation();
   }
@@ -63,31 +62,31 @@ export class UserComponent {
     this.router.navigate([`${ApplicationRoutes.UsersUpsert}/${userId}`]);
   }
 
-  private updateUser(user: IUser, index: number): void {
-    this.users[index] = { ...user };
-    this.userService.updateUser(this.users[index]);
-    this.users = this.userService.getAllUsers();
-    this.selectedUser = null;
-  }
+  // private updateUser(user: IUser, index: number): void {
+  //   this.users[index] = { ...user };
+  //   this.userService.updateUser(this.users[index]);
+  //   this.users = this.userService.getAllUsers();
+  //   this.selectedUser = null;
+  // }
 
-  private addUser(user: IUser): void {
-    this.userService.addUser(user);
-    this.users = this.userService.getAllUsers();
-    this.selectedUser = null;
-  }
+  // private addUser(user: IUser): void {
+  //   this.userService.addUser(user);
+  //   this.users = this.userService.getAllUsers();
+  //   this.selectedUser = null;
+  // }
 
-  private isUserValid(user: IUser): boolean {
-    if (!user.name) {
-      return false;
-    }
-    if (!user.surname) {
-      return false;
-    }
+  // private isUserValid(user: IUser): boolean {
+  //   if (!user.name) {
+  //     return false;
+  //   }
+  //   if (!user.surname) {
+  //     return false;
+  //   }
 
-    return true;
-  }
+  //   return true;
+  // }
 
-  private findUserIndex(): number {
-    return this.users.findIndex((user) => user.id == this.selectedUser?.id);
-  }
+  // private findUserIndex(): number {
+  //   return this.users.findIndex((user) => user.id == this.selectedUser?.id);
+  // }
 }
