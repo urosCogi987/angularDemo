@@ -4,7 +4,6 @@ import { ParentComponent } from './pages/parent/parent.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ApplicationRoutes } from './const/application-routes';
 import { UserComponent } from './pages/user/user.component';
-import { UserUpsertComponent } from './pages/user-upsert/user-upsert.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
 
@@ -28,11 +27,17 @@ export const routes: Routes = [
   {
     path: `${ApplicationRoutes.AddUser}`,
     component: AddUserComponent,
+    // data: {
+    //   isEdit: false,
+    // },
     title: 'Add user',
   },
   {
     path: `${ApplicationRoutes.UpdateUser}/:id`,
     component: UpdateUserComponent,
+    data: {
+      isEdit: true,
+    },
     title: 'Update user',
   },
   { path: '**', component: HomeComponent },

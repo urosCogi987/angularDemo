@@ -1,5 +1,5 @@
 <div *ngIf="user">
-  <h3>{{ user.id > 0 ? "Update User" : "Add User" }}</h3>
+  <h3>{{ isEdit ? "Update User" : "Add User" }}</h3>
   <form (ngSubmit)="handleUser(user, user.id > 0 ? false : true)">
     <div>
       <label>Name:</label>
@@ -10,7 +10,7 @@
       <input [(ngModel)]="user.surname" name="surname" required />
     </div>
     <button type="submit">
-      {{ user.id > 0 ? "Update User" : "Add User" }}
+      {{ isEdit ? "Update User" : "Add User" }}
     </button>
     <button type="button" (click)="cancel()">Cancel</button>
   </form>

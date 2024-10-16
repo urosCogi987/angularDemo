@@ -18,6 +18,7 @@ export class UpsertUserComponent {
   userService: UserService = inject(UserService);
   router: Router = inject(Router);
   user: IUser | undefined;
+  isEdit: boolean = false;
 
   constructor() {
     this.initializeUser();
@@ -42,9 +43,13 @@ export class UpsertUserComponent {
   }
 
   private initializeUser(): void {
-    const userId = Number(this.route.snapshot.params['id']);
-    if (userId) {
-      this.user = this.userService.getUserById(userId);
+    this.isEdit = this.route.snapshot.data['isEdit'];
+
+    if (this.isEdit) {
+      this.user = this.userService.getUserById(
+        Number(this.route.snapshot.params['id'])
+      );
+
       return;
     }
 

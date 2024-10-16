@@ -5,9 +5,12 @@
       [(ngModel)]="isChecked"
       (click)="toggleTextVisibility()"
     />
-    <!-- na (change) zajebava i 2 puta mora se klikne-->
   </div>
   <div *ngIf="isChecked">
     <p>Uros</p>
   </div>
+</div>
+
+<div>
+  <p appHoverColorChange>Hover over</p>
 </div>

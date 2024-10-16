@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { UserUpsertComponent } from '../user-upsert/user-upsert.component';
+import { UpsertUserComponent } from '../../components/upsert-user/upsert-user.component';
 
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [UserUpsertComponent],
+  imports: [UpsertUserComponent],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.scss',
 })
