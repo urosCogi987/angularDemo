@@ -17,9 +17,10 @@ export class UserService {
   }
 
   addUser(user: IUser): void {
-    user.id = this.getNextId();
+    const newUser = JSON.parse(JSON.stringify(user));
+    newUser.id = this.getNextId();
 
-    this._users.push(user);
+    this._users.push(newUser);
     this.updateLocalStorage();
   }
 
@@ -29,7 +30,8 @@ export class UserService {
       return;
     }
 
-    this._users[index] = user;
+    const updatedUser = JSON.parse(JSON.stringify(user));
+    this._users[index] = updatedUser;
     this.updateLocalStorage();
   }
 

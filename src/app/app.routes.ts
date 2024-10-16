@@ -5,6 +5,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ApplicationRoutes } from './const/application-routes';
 import { UserComponent } from './pages/user/user.component';
 import { UserUpsertComponent } from './pages/user-upsert/user-upsert.component';
+import { AddUserComponent } from './pages/add-user/add-user.component';
+import { UpdateUserComponent } from './pages/update-user/update-user.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home' },
@@ -24,9 +26,14 @@ export const routes: Routes = [
     title: 'Users',
   },
   {
-    path: `${ApplicationRoutes.UsersUpsert}/:id`,
-    component: UserUpsertComponent,
-    title: 'User upsert',
+    path: `${ApplicationRoutes.AddUser}`,
+    component: AddUserComponent,
+    title: 'Add user',
+  },
+  {
+    path: `${ApplicationRoutes.UpdateUser}/:id`,
+    component: UpdateUserComponent,
+    title: 'Update user',
   },
   { path: '**', component: HomeComponent },
 ];

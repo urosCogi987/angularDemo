@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users" (click)="navigateToUserUpsert(user.id)">
+      <tr *ngFor="let user of users" [routerLink]="[userUpdateRoute, user.id]">
         <td>{{ user.name | capitalize : capitalizeNames }}</td>
         <td>{{ user.surname | capitalize : capitalizeNames }}</td>
         <td>
@@ -25,4 +25,4 @@
   </label>
 </div>
 
-<button (click)="navigateToUserUpsert(null)">Add New User</button>
+<button [routerLink]="[userAddRoute]">Add New User</button>

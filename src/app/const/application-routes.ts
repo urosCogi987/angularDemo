@@ -3,5 +3,6 @@ export const ApplicationRoutes = {
   Parent: 'parent',
   Details: 'details',
   Users: 'users',
-  UsersUpsert: 'users-upsert',
+  UpdateUser: 'update-user',
+  AddUser: 'add-user',
 };
