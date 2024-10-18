@@ -4,8 +4,16 @@
     <li><a routerLink="/{{ appRoutes.Parent }}">Parent</a></li>
     <li><a routerLink="/{{ appRoutes.Details }}">Details</a></li>
     <li><a routerLink="/{{ appRoutes.Users }}">Users</a></li>
-    <!-- <li><a routerLink="/{{ appRoutes.UsersUpsert }}">Upsert user</a></li> -->
+    <li><a routerLink="/{{ appRoutes.Secure }}">Secure Page</a></li>
   </ul>
 </nav>
+
+<div>
+  <input
+    type="checkbox"
+    [(ngModel)]="isChecked"
+    (click)="toggleSecureAccess()"
+  />
+</div>
 
 <router-outlet></router-outlet>

@@ -5,4 +5,5 @@ export const ApplicationRoutes = {
   Users: 'users',
   UpdateUser: 'update-user',
   AddUser: 'add-user',
+  Secure: 'secure',
 };

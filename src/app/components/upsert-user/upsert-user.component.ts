@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { IUser } from '../../models/user';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ApplicationRoutes } from '../../const/application-routes';
+import { CanComponentDeactivate } from '../../guards/can-leave.guard';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-upsert-user',
@@ -13,15 +15,28 @@ import { ApplicationRoutes } from '../../const/application-routes';
   templateUrl: './upsert-user.component.html',
   styleUrl: './upsert-user.component.scss',
 })
-export class UpsertUserComponent {
+export class UpsertUserComponent implements CanComponentDeactivate {
   route: ActivatedRoute = inject(ActivatedRoute);
   userService: UserService = inject(UserService);
   router: Router = inject(Router);
   user: IUser | undefined;
   isEdit: boolean = false;
+  private hasUnsavedChanges: boolean = false;
 
   constructor() {
     this.initializeUser();
+  }
+
+  onInputChange(): void {
+    this.hasUnsavedChanges = true;
+  }
+
+  canDeactivate(): boolean {
+    console.log('method called.');
+    if (this.hasUnsavedChanges) {
+      return confirm('You have unsaved changes.');
+    }
+    return true;
   }
 
   cancel(): void {
@@ -49,7 +64,6 @@ export class UpsertUserComponent {
       this.user = this.userService.getUserById(
         Number(this.route.snapshot.params['id'])
       );
-
       return;
     }
 

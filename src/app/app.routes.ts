@@ -6,6 +6,11 @@ import { ApplicationRoutes } from './const/application-routes';
 import { UserComponent } from './pages/user/user.component';
 import { AddUserComponent } from './pages/add-user/add-user.component';
 import { UpdateUserComponent } from './pages/update-user/update-user.component';
+import { SecureComponent } from './pages/secure/secure.component';
+import { authGuard } from './guards/auth.guard';
+import { canDeactivateGuard } from './guards/can-leave.guard';
+import { Component } from '@angular/core';
+import { UpsertUserComponent } from './components/upsert-user/upsert-user.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home' },
@@ -27,10 +32,10 @@ export const routes: Routes = [
   {
     path: `${ApplicationRoutes.AddUser}`,
     component: AddUserComponent,
-    // data: {
-    //   isEdit: false,
-    // },
     title: 'Add user',
+    canDeactivate: [
+      (Component: UpsertUserComponent) => Component.canDeactivate(),
+    ],
   },
   {
     path: `${ApplicationRoutes.UpdateUser}/:id`,
@@ -39,6 +44,14 @@ export const routes: Routes = [
       isEdit: true,
     },
     title: 'Update user',
+    canDeactivate: [
+      (Component: UpsertUserComponent) => Component.canDeactivate(),
+    ],
+  },
+  {
+    path: `${ApplicationRoutes.Secure}`,
+    component: SecureComponent,
+    canActivate: [authGuard],
   },
   { path: '**', component: HomeComponent },
 ];
