@@ -4,8 +4,6 @@ import { ParentComponent } from './pages/parent/parent.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ApplicationRoutes } from './const/application-routes';
 import { UserComponent } from './pages/user/user.component';
-import { AddUserComponent } from './pages/add-user/add-user.component';
-import { UpdateUserComponent } from './pages/update-user/update-user.component';
 import { SecureComponent } from './pages/secure/secure.component';
 import { authGuard } from './guards/auth.guard';
 import { canDeactivateGuard } from './guards/can-leave.guard';
@@ -31,22 +29,18 @@ export const routes: Routes = [
   },
   {
     path: `${ApplicationRoutes.AddUser}`,
-    component: AddUserComponent,
+    component: UpsertUserComponent,
     title: 'Add user',
-    canDeactivate: [
-      (Component: UpsertUserComponent) => Component.canDeactivate(),
-    ],
+    canDeactivate: [canDeactivateGuard],
   },
   {
     path: `${ApplicationRoutes.UpdateUser}/:id`,
-    component: UpdateUserComponent,
+    component: UpsertUserComponent,
     data: {
       isEdit: true,
     },
     title: 'Update user',
-    canDeactivate: [
-      (Component: UpsertUserComponent) => Component.canDeactivate(),
-    ],
+    canDeactivate: [canDeactivateGuard],
   },
   {
     path: `${ApplicationRoutes.Secure}`,

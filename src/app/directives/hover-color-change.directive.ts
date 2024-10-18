@@ -21,7 +21,7 @@ export class HoverColorChangeDirective {
       );
     }
   }
-
+  // boja da ostane inicijalna, ipak ne tako
   @HostListener('mouseleave') onMouseLeave() {
     this.renderer.setStyle(this.element.nativeElement, 'color', 'black');
   }

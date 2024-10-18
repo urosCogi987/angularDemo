@@ -3,21 +3,11 @@
   <form (ngSubmit)="handleUser(user, isEdit)">
     <div>
       <label>Name:</label>
-      <input
-        [(ngModel)]="user!.name"
-        name="name"
-        required
-        (ngModelChange)="onInputChange()"
-      />
+      <input [(ngModel)]="user!.name" name="name" required />
     </div>
     <div>
       <label>Surname:</label>
-      <input
-        [(ngModel)]="user.surname"
-        name="surname"
-        required
-        (ngModelChange)="onInputChange()"
-      />
+      <input [(ngModel)]="user.surname" name="surname" required />
     </div>
     <button type="submit">
       {{ isEdit ? "Update User" : "Add User" }}
