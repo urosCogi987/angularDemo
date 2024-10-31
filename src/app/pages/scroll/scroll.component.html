@@ -1,0 +1,28 @@
+<div>
+  <button (click)="scrollToElement(25)">Scroll to 25th Element</button>
+</div>
+<div>
+  <input
+    type="number"
+    [(ngModel)]="targetIndex"
+    placeholder="Enter ordinal number"
+  />
+  <button (click)="scrollToTypedElement()">ScrollToNumber</button>
+</div>
+
+<div style="display: flex">
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Text</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let element of elements; let i = index">
+        <td id="{{ i + 1 }}">{{ element.id }}</td>
+        <td>{{ element.text }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

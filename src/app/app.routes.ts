@@ -9,6 +9,7 @@ import { authGuard } from './guards/auth.guard';
 import { canDeactivateGuard } from './guards/can-leave.guard';
 import { Component } from '@angular/core';
 import { UpsertUserComponent } from './components/upsert-user/upsert-user.component';
+import { ScrollComponent } from './pages/scroll/scroll.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home' },
@@ -41,6 +42,11 @@ export const routes: Routes = [
     },
     title: 'Update user',
     canDeactivate: [canDeactivateGuard],
+  },
+  {
+    path: `${ApplicationRoutes.Scroll}`,
+    component: ScrollComponent,
+    title: 'Scroll',
   },
   {
     path: `${ApplicationRoutes.Secure}`,
