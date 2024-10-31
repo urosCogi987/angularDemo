@@ -12,7 +12,6 @@ export class HoverColorChangeDirective {
   @HostListener('mouseenter') onMouseEnter() {
     this.hoverCount++;
 
-    this.renderer.removeClass(this.element.nativeElement, 'original');
     this.renderer.addClass(this.element.nativeElement, 'changed');
 
     if (this.hoverCount > 5) {
@@ -26,6 +25,5 @@ export class HoverColorChangeDirective {
 
   @HostListener('mouseleave') onMouseLeave() {
     this.renderer.removeClass(this.element.nativeElement, 'changed');
-    this.renderer.addClass(this.element.nativeElement, 'original');
   }
 }

@@ -10,19 +10,17 @@
   <button (click)="scrollToTypedElement()">ScrollToNumber</button>
 </div>
 
-<div style="display: flex">
-  <table>
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Text</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let element of elements">
-        <td #elementRef>{{ element.id }}</td>
-        <td>{{ element.text }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table mat-table [dataSource]="elements" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>Id</th>
+    <td matt-cell *matCellDef="let element" #elementRef>{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="text">
+    <th mat-header-cell *matHeaderCellDef>Text</th>
+    <td matt-cell *matCellDef="let element">{{ element.text }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

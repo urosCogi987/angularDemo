@@ -10,11 +10,12 @@ import { ScrollService } from '../../services/scroll.service';
 import { IScrollElement } from '../../models/scroll-element';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-scroll',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatTableModule],
   templateUrl: './scroll.component.html',
   styleUrl: './scroll.component.scss',
 })
@@ -22,6 +23,7 @@ export class ScrollComponent implements OnInit {
   scrollService: ScrollService = inject(ScrollService);
   elements: IScrollElement[] = [];
   targetId: number | null = null;
+  displayedColumns: string[] = ['id', 'text'];
 
   @ViewChildren('elementRef', { read: ElementRef })
   elementRefs!: QueryList<ElementRef>;
