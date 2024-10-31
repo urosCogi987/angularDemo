@@ -11,7 +11,9 @@ export class HoverColorChangeDirective {
 
   @HostListener('mouseenter') onMouseEnter() {
     this.hoverCount++;
-    this.renderer.setStyle(this.element.nativeElement, 'color', 'red');
+
+    this.renderer.removeClass(this.element.nativeElement, 'original');
+    this.renderer.addClass(this.element.nativeElement, 'changed');
 
     if (this.hoverCount > 5) {
       this.renderer.setProperty(
@@ -21,8 +23,9 @@ export class HoverColorChangeDirective {
       );
     }
   }
-  // boja da ostane inicijalna, ipak ne tako
+
   @HostListener('mouseleave') onMouseLeave() {
-    this.renderer.setStyle(this.element.nativeElement, 'color', 'black');
+    this.renderer.removeClass(this.element.nativeElement, 'changed');
+    this.renderer.addClass(this.element.nativeElement, 'original');
   }
 }
